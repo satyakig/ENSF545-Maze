@@ -624,18 +624,20 @@ public class HapticPlugin : MonoBehaviour  {
 	{
 		if (isIncorrectVersion)	return;
 
-		Debug.unityLogger.Log("Safing the Manipulator.");
+		//Debug.unityLogger.Log("Safing the Manipulator.");
+
 		if (hapticManipulator == null)
 			return;
 		Rigidbody body = hapticManipulator.GetComponent<Rigidbody>();
 		if (body == null)
 			return;
 		updateDevice();
-
-
-		body.position = stylusPositionWorld;
-		body.rotation = stylusRotationWorld;
-		body.velocity = Vector3.zero;
+		
+		{
+			body.position = stylusPositionWorld;
+			body.rotation = stylusRotationWorld;
+			body.velocity = Vector3.zero;
+		}
 
 		double[] zero = {0.0,0.0,0.0};
 		setSpringStiffness(configName, 0.0, 0.0);

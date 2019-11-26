@@ -46,9 +46,6 @@ public class BlockPuzzleController : MonoBehaviour {
 			ResetBlocks();
 			return;
 		}
-        else if (Input.GetKey("escape"))
-        {
-            Application.Quit();
-        }
-    }
+
+	}
 }

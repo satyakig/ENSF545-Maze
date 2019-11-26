@@ -7,8 +7,7 @@ using System;
 // Class that tracks the main camera position
 public class CameraPosition : MonoBehaviour
 {
-    Camera MainCamera;
-    public static Vector3 MainCameraPosition;
+    public GameObject MainCamera;
 
     private const float StartZPoistion = -60f;
     private const float EndZPosition = -50f;
@@ -21,15 +20,16 @@ public class CameraPosition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        MainCamera = Camera.main;
-        UnityEngine.Debug.Log("Main Camera: " + MainCamera.name);
+        MainCamera = Camera.main.gameObject;
+        UnityEngine.Debug.Log("Main Camera: " + Camera.main.name);
     }
 
     // Update is called once per frame
     void Update()
     {
-        MainCameraPosition = MainCamera.gameObject.transform.position;
+        Vector3 MainCameraPosition = MainCamera.transform.position;
 
+        // Check the camera position to determine whether the player has started the maze or not
         bool start;
         if (MainCameraPosition.z >= StartZPoistion)
         {
@@ -75,5 +75,13 @@ public class CameraPosition : MonoBehaviour
 
         PastStart = start;
         PastEnd = end;
+
+        // Rotate the camera based on the haptic device
+        int RotationCount = HapticRotationQueue.rotations.Count;
+        if (RotationCount > 0)
+        {
+            Vector3 rotation = HapticRotationQueue.rotations.Dequeue();
+            MainCamera.transform.Rotate(rotation.x, rotation.y, 0f);
+        }
     }
 }

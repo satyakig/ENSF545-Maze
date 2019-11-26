@@ -210,7 +210,7 @@ public class HapticGrabber : MonoBehaviour
 			return;
 
 		// Grabbing a grabber is bad news.
-		if (touchedObject.CompareTag("Gripper"))
+		if (touchedObject.tag =="Gripper")
 			return;
 
 		Debug.Log( " Object : " + touchedObject.name + "  Tag : " + touchedObject.tag );
