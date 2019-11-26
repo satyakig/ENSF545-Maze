@@ -7,58 +7,100 @@ using System.Runtime.CompilerServices;
 // Class that tilts a game object along an axis
 public class Tilt : MonoBehaviour
 {
-    private readonly double MAX_TILT = 5; // degrees
+    private readonly double MAX_TILT = 10; // degrees
     private readonly float ROTATE_AMT = 0.25f; // degrees
-    private bool ShouldTilt = false;
-    private volatile float CurrentRotation = 0f;
-    private volatile bool PosTilt = true;
+
+    private string tiltAxis;
+    private float currentRotation = 0f;
+    private bool isPositiveTilt = true;
+    private bool shouldTilt;
 
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("CheckTiltInput", 0f, 0.25f);
+        this.tiltAxis = BodyPosition.Z;
+        this.shouldTilt = false;
+        InvokeRepeating("CheckTiltInput", 0f, 0.15f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        this.Rotate();
+        if (this.shouldTilt)
+        {
+            this.TiltObject();
+        }
+        else
+        {
+            this.ResetTilt();
+        }
     }
 
-    // Toggle tilt on/off on key press T
+    private void TiltObject()
+    {
+        //string newTiltAxis = BodyPosition.GetTiltAxis();
+
+        //if (newTiltAxis != this.tiltAxis)
+        //{
+        //    this.ResetTilt();
+        //}
+
+        //this.tiltAxis = newTiltAxis;
+
+        float rotate = ROTATE_AMT;
+
+        if (Math.Abs(this.currentRotation) > MAX_TILT)
+        {
+            this.isPositiveTilt = !this.isPositiveTilt;
+        }
+
+        if (!this.isPositiveTilt)
+        {
+            rotate *= -1;
+        }
+
+        this.currentRotation += rotate;
+        if (this.tiltAxis == BodyPosition.X)
+        {
+            this.transform.Rotate(rotate, 0f, 0f);
+        }
+        else if (this.tiltAxis == BodyPosition.Y)
+        {
+            this.transform.Rotate(0f, rotate, 0f);
+        }
+        else if (this.tiltAxis == BodyPosition.Z)
+        {
+            this.transform.Rotate(0f, 0f, rotate);
+        }
+    }
+
+    private void ResetTilt()
+    {
+        if (Math.Abs(this.currentRotation) > 0)
+        {
+            if (this.tiltAxis == BodyPosition.X)
+            {
+                this.transform.Rotate(-1f * this.currentRotation, 0f, 0f);
+            } 
+            else if (this.tiltAxis == BodyPosition.Y)
+            {
+                this.transform.Rotate(0f, -1f * this.currentRotation, 0f);
+            }
+            else if (this.tiltAxis == BodyPosition.Z)
+            {
+                this.transform.Rotate(0f, 0f, -1f * this.currentRotation);
+            }
+
+            this.currentRotation = 0f;
+        }
+    }
+
     private void CheckTiltInput()
     {
         if (Input.GetKey(KeyCode.T))
         {
-            if (this.ShouldTilt)
-            {
-                transform.Rotate(0, 0, -1 * this.CurrentRotation);
-            }
-
-
-            this.ShouldTilt = !this.ShouldTilt;
-            Debug.Log("Tilt: " + this.ShouldTilt);
-        }
-    }
-
-    private void Rotate()
-    {
-        if (this.ShouldTilt)
-        {
-            float rotate = ROTATE_AMT;
-
-            if (Math.Abs(this.CurrentRotation) > MAX_TILT)
-            {
-                this.PosTilt = !this.PosTilt;
-            }
-
-            if (!this.PosTilt)
-            {
-                rotate *= -1;
-            }
-
-            this.CurrentRotation += rotate;
-            transform.Rotate(0, 0, rotate);
+            this.shouldTilt = !this.shouldTilt;
+            Debug.Log("Tilting: " + this.shouldTilt);
         }
     }
 }

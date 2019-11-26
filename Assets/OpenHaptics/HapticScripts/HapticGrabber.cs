@@ -213,11 +213,11 @@ public class HapticGrabber : MonoBehaviour
 		if (touchedObject.tag =="Gripper")
 			return;
 
-		Debug.Log( " Object : " + touchedObject.name + "  Tag : " + touchedObject.tag );
+		Debug.Log( " gameObject : " + touchedObject.name + "  Tag : " + touchedObject.tag );
 
 		grabbing = touchedObject;
 
-		//Debug.logger.Log("Grabbing Object : " + grabbing.name);
+		//Debug.logger.Log("Grabbing gameObject : " + grabbing.name);
 		Rigidbody body = grabbing.GetComponent<Rigidbody>();
 
 		// If this doesn't have a rigidbody, walk up the tree. 

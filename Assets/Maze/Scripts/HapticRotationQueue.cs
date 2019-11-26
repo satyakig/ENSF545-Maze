@@ -5,32 +5,27 @@ using UnityEngine;
 // Class that stores the haptic device grabber positions to be used by the camera to rotate
 public class HapticRotationQueue : MonoBehaviour
 {
-    private Vector3 PrevPosition;
+    private Vector3 prevPosition;
     public static Queue<Vector3> rotations;
 
     // Start is called before the first frame update
     void Start()
     {
-        PrevPosition = transform.position;
-
+        this.prevPosition = this.transform.position;
         rotations = new Queue<Vector3>();
-
-        // Add two empty rotations
-        rotations.Enqueue(new Vector3(0, 0, 0));
-        rotations.Enqueue(new Vector3(0, 0, 0));
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 NewPosition = transform.position;
+        Vector3 newPosition = this.transform.position;
 
         // Transform it into the Euler rotations
-        float diffX = NewPosition.x - PrevPosition.x;
-        float diffY = -1f * (NewPosition.y - PrevPosition.y);
-        float diffZ = NewPosition.z - PrevPosition.z;
+        float diffX = newPosition.x - prevPosition.x;
+        float diffY = -1f * (newPosition.y - prevPosition.y);
+        float diffZ = newPosition.z - prevPosition.z;
 
         rotations.Enqueue(new Vector3(diffY, diffX, diffZ));
-        PrevPosition = NewPosition;
+        this.prevPosition = newPosition;
     }
 }
