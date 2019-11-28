@@ -36,7 +36,7 @@ public class CameraTracker : MonoBehaviour
             if (count > 0)
             {
                 Vector3 rotation = rotations.Dequeue();
-                this.mainCamera.transform.Rotate(rotation.y, rotation.x, 0f);
+                this.mainCamera.transform.Rotate(0f, rotation.x, 0f);
             }
         }
     }

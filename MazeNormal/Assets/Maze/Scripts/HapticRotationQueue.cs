@@ -20,9 +20,9 @@ public class HapticRotationQueue : MonoBehaviour
         Vector3 newPosition = this.transform.position;
 
         // Transform it into the Euler rotations
-        float diffX = (newPosition.x - prevPosition.x) * 50f;
-        float diffY = -1f * (newPosition.y - prevPosition.y) * 50f;
-        float diffZ = (newPosition.z - prevPosition.z) * 50f;
+        float diffX = (newPosition.x - prevPosition.x) * 30f;
+        float diffY = -1f * (newPosition.y - prevPosition.y) * 30f;
+        float diffZ = (newPosition.z - prevPosition.z) * 30f;
 
         rotations.Enqueue(new Vector3(diffX, diffY, diffZ));
         this.prevPosition = newPosition;

@@ -16,25 +16,27 @@ public class ChangeColour : MonoBehaviour
         // Create an array of all the HSV colours
         if (name.Contains("Bad"))
         {
-            for (int h = 0; h <= 30; h++)
-            {
-                float hue = (float)h / 360;
-                this.colours.Add(Color.HSVToRGB(hue, 1.0f, 1.0f));
-            }
+            this.colours.Add(new Color(1f, 0f,  0f));
+            //for (int h = 0; h <= 30; h++)
+            //{
+            //    float hue = (float)h / 360;
+            //    this.colours.Add(Color.HSVToRGB(hue, 1.0f, 1.0f));
+            //}
         }
         else if (name.Contains("Good"))
         {
-            for (int h = 121; h <= 151; h++)
-            {
-                float hue = (float)h / 360;
-                this.colours.Add(Color.HSVToRGB(hue, 1.0f, 1.0f));
-            }
+            this.colours.Add(new Color(0f, 1f, 0f));
+            //for (int h = 121; h <= 151; h++)
+            //{
+            //    float hue = (float)h / 360;
+            //    this.colours.Add(Color.HSVToRGB(hue, 1.0f, 1.0f));
+            //}
         }
         else
         {
             for (int h = 0; h <= 360; h++)
             {
-                float hue = (float)h / 360;
+                //float hue = (float)h / 360;
                 //this.colours.Add(Color.HSVToRGB(hue, 1.0f, 1.0f));
             }
 
